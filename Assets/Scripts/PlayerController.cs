@@ -40,12 +40,12 @@ namespace DefaultNamespace
             if (!_movingAuto)
             {
                 MovingManual();
-                Debug.Log("Manual moving to forward");
+                //Debug.Log("Manual moving to forward");
             }
             else
             {
                 MovingAuto();
-                Debug.Log("Automatic moving to forward");
+                //Debug.Log("Automatic moving to forward");
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
