@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Globalization;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -5,42 +8,71 @@ using TMPro;
 using UnityEngine.UI;
 
 public class PlayFabLogin : MonoBehaviour
-{ 
-    [SerializeField] private string _customId = "Player1";
+{
     [SerializeField] private Button _loginButton;
+    [SerializeField] private Button _closeButton;
     [SerializeField] private TMP_Text _resultText;
-    
+    [SerializeField] private TMP_Text _sliderText;
+    [SerializeField] private Canvas _accountCanvas;
+    [SerializeField] private Canvas _playFabLoginCanvas;
+    [SerializeField] private Slider _slider;
+
+    private const string AuthGudKey = "auth_guid";
     private string _titleId = "18AE5";
-    
+
     private string _result = "Log in result: ";
     private string _success = "Done, huh!";
     private string _fail = "Ups, fail!";
-    
+    private string _percent = "%";
+    private float _curValue;
+    private float _maxValue;
+
     private void Start()
     {
-        _loginButton.gameObject.SetActive(true);
-        _resultText.gameObject.SetActive(false);
+        _curValue = _slider.value;
+        _maxValue = _slider.maxValue;
         
-        /*if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
+        DisableAccountCanvas();
+        
+        _loginButton.onClick.AddListener(OnPlayFabClientAPI);
+        _closeButton.onClick.AddListener(DisablePlayFabLoginCanvas);
+
+        _slider = GetComponent<Slider>();
+    }
+
+    private void Update()
+    {
+        StartCoroutine(SliderValueChange());
+    }
+
+    private void OnPlayFabClientAPI()
+    {
+        if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
         {
             PlayFabSettings.staticSettings.TitleId = _titleId;
         }
 
+        var needCreation = PlayerPrefs.HasKey(AuthGudKey);
+        var id = PlayerPrefs.GetString(AuthGudKey, Guid.NewGuid().ToString());
+
         var request = new LoginWithCustomIDRequest
         {
-            CustomId = _customId,
-            CreateAccount = true
+            CustomId = id,
+            CreateAccount = !needCreation
         };
-        
-        PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginError);*/
-        
-        _loginButton.onClick.AddListener(OnPlayFabClientAPI);
-    }
 
+        PlayFabClientAPI.LoginWithCustomID(request,
+            success =>
+            {
+                PlayerPrefs.SetString(AuthGudKey, id);
+                OnLoginSuccess(success); 
+                
+            }, OnLoginError);
+    }
+    
     private void OnLoginSuccess(LoginResult result)
     {
-        _loginButton.gameObject.SetActive(false);
-        _resultText.gameObject.SetActive(true);
+        _loginButton.interactable = false;
         _resultText.color = Color.green;
         _resultText.text = _result + _success;
         Debug.Log("Done, huh!");
@@ -50,30 +82,45 @@ public class PlayFabLogin : MonoBehaviour
     {
         var errorMessage = error.GenerateErrorReport();
         Debug.LogError($"Ups, fail: {errorMessage}");
-        _loginButton.gameObject.SetActive(false);
-        _resultText.gameObject.SetActive(true);
+        _loginButton.interactable = true;
         _resultText.color = Color.red;
         _resultText.text = _result + _fail + errorMessage;
     }
-    
-    private void OnPlayFabClientAPI()
+
+    private void DisablePlayFabLoginCanvas()
     {
-        if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
-        {
-            PlayFabSettings.staticSettings.TitleId = _titleId;
-        }
-
-        var request = new LoginWithCustomIDRequest
-        {
-            CustomId = _customId,
-            CreateAccount = true
-        };
-
-        PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginError);
+        _playFabLoginCanvas.gameObject.SetActive(false);
+        EnableAccountCanvas();
     }
-    
+
+    private void EnableAccountCanvas()
+    {
+        _accountCanvas.gameObject.SetActive(true);
+    }
+
+    private void DisableAccountCanvas()
+    {
+        _accountCanvas.gameObject.SetActive(false);
+    }
+
+    private IEnumerator SliderValueChange()
+    {
+        while (_curValue < _maxValue)
+        {
+            ++_curValue;
+            SliderValueDisplay(_curValue);
+            yield return _curValue;
+        }
+    }
+
+    private void SliderValueDisplay(float _curValue)
+    {
+        _sliderText.text = _curValue.ToString(CultureInfo.InvariantCulture) + _percent;
+    }
+
     private void OnDestroy()
     {
         _loginButton.onClick.RemoveAllListeners();
+        _closeButton.onClick.RemoveAllListeners();
     }
 }

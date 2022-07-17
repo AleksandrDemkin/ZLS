@@ -70,7 +70,6 @@ namespace DefaultNamespace
         {
             _direction = _playerRigidbody.velocity;
             _direction.x = Input.GetAxisRaw("Horizontal") * SideSpeed;
-            //_direction.z = Speed;
             _direction.z = Input.GetAxisRaw("Vertical") * Speed;
             _playerRigidbody.velocity = _direction;
         }
@@ -80,7 +79,6 @@ namespace DefaultNamespace
             _direction = _playerRigidbody.velocity;
             _direction.x = Input.GetAxisRaw("Horizontal") * SideSpeed;
             _direction.z = Speed;
-            //_direction.z = Input.GetAxisRaw("Vertical") * Speed;
             _playerRigidbody.velocity = _direction;
         }
 
@@ -91,7 +89,7 @@ namespace DefaultNamespace
         
         private void OnTriggerEnter(Collider coin)
         {
-            if (!coin.CompareTag("Coin")) return;
+            if (!coin.GetComponent(typeof(CoinController))) return;
             _coinCollect.StartCoinMove(coin.transform.position, () => 
             {
                 _coins++;
