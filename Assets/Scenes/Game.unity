@@ -4685,7 +4685,7 @@ GameObject:
   - component: {fileID: 1966924814}
   - component: {fileID: 1966924813}
   m_Layer: 0
-  m_Name: Goungs
+  m_Name: "G\u043Aoungs"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
