@@ -30,7 +30,19 @@ namespace Photon.Pun.Demo.PunBasics
 	    [Tooltip("UI Text to display Player's Name")]
 	    [SerializeField]
 	    private Text playerNameText;
+	    
+	    [Tooltip("UI Text to display Player's ID")]
+	    [SerializeField]
+	    private Text _playerIdText;
+	    
+	    [Tooltip("UI Text to display Player's health")]
+	    [SerializeField]
+	    private Text _playerHealthText;
 
+	    [Tooltip("UI Text to display Player's experience")]
+	    [SerializeField]
+	    private Text _playerExperienceText;
+	    
 	    [Tooltip("UI Slider to display Player's Health")]
 	    [SerializeField]
 	    private Slider playerHealthSlider;
@@ -73,12 +85,17 @@ namespace Photon.Pun.Demo.PunBasics
 				Destroy(this.gameObject);
 				return;
 			}
-
-
+			
 			// Reflect the Player Health
 			if (playerHealthSlider != null) {
 				playerHealthSlider.value = target.Health;
+				_playerHealthText.text = target.Health.ToString();
 			}
+			
+			// Reflect the Player ID
+			_playerIdText.text = target.Id.ToString();
+			
+			_playerExperienceText.text = target.Experience.ToString();
 		}
 
 		/// <summary>
@@ -102,11 +119,7 @@ namespace Photon.Pun.Demo.PunBasics
 				
 				this.transform.position = Camera.main.WorldToScreenPoint (targetPosition) + screenOffset;
 			}
-
 		}
-
-
-
 
 		#endregion
 

@@ -19,7 +19,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        //_logoutButton.gameObject.SetActive(false);
         _logoutButton.interactable = false;
         _resultText.text = _result;
         _resultText.color = Color.green;
@@ -37,7 +36,6 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = Application.version;
-            //PhotonNetwork.GameVersion = _gameVersion;
         }
     }
 
@@ -45,9 +43,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         _loginButton.interactable = false;
         _logoutButton.interactable = true;
-        //_resultText.gameObject.SetActive(true);
-        //_loginButton.gameObject.SetActive(false);
-        //_logoutButton.gameObject.SetActive(true);
         Debug.Log("OnConnectedToMaster() was called by PUN");
         _resultText.text = _result + _loginLobby;
         _resultText.color = Color.green;
@@ -57,22 +52,17 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log($"OnJoinedLobby: {PhotonNetwork.InLobby}");
-        //_resultText.text = _result + _loginLobby;
         PhotonNetwork.JoinOrCreateRoom(_roomName,
             new RoomOptions {MaxPlayers = 2, IsVisible = true}, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()
     {
-        //_resultText.text = _result + _loginRoom;
         Debug.Log($"OnJoinedRoom: {PhotonNetwork.InRoom}");
     }
 
     private void Disconnect()
     {
-        //_resultText.gameObject.SetActive(true);
-        //_loginButton.gameObject.SetActive(true);
-        //_logoutButton.gameObject.SetActive(false);
         _loginButton.interactable = true;
         _logoutButton.interactable = false;
         PhotonNetwork.Disconnect();

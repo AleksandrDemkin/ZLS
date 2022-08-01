@@ -26,6 +26,10 @@ namespace Photon.Pun.Demo.PunBasics
         [Tooltip("The current Health of our player")]
         public float Health = 1f;
 
+        [Tooltip("The current Experience of our player")]
+        public float Experience;
+        
+        
         [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
         public static GameObject LocalPlayerInstance;
 
@@ -42,7 +46,25 @@ namespace Photon.Pun.Demo.PunBasics
         private GameObject beams;
 
         //True, when the user is firing
-        bool IsFiring;
+        [SerializeField]
+        private bool IsFiring;
+        
+        //ID
+        private float _id;
+
+        //Damage
+        private float _damage = 0.1f;
+        
+        private float _expMax = 100f;
+
+        private float _step = 1f;
+        
+
+        public float Id
+        {
+            get => photonView.ViewID;
+            set => _id = value;
+        }
 
         #endregion
 
@@ -61,6 +83,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 this.beams.SetActive(false);
             }
+            
 
             // #Important
             // used in GameManager.cs: we keep track of the localPlayer instance to prevent instanciation when levels are synchronized
@@ -103,6 +126,8 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUiPrefab reference on player Prefab.", this);
             }
+            
+            Experience = 0f;
 
             #if UNITY_5_4_OR_NEWER
             // Unity 5.4 has a new scene management. register a method to call CalledOnLevelWasLoaded.
@@ -145,6 +170,11 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 this.beams.SetActive(this.IsFiring);
             }
+
+            if (Experience < _expMax)
+            {
+                Experience += _step;
+            }
         }
 
         /// <summary>
@@ -168,7 +198,7 @@ namespace Photon.Pun.Demo.PunBasics
                 return;
             }
 
-            this.Health -= 0.1f;
+            this.Health -= _damage;
         }
 
         /// <summary>
@@ -192,7 +222,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
 
             // we slowly affect health when beam is constantly hitting us, so player has to move to prevent death.
-            this.Health -= 0.1f*Time.deltaTime;
+            this.Health -= _damage*Time.deltaTime;
         }
 
 
@@ -275,12 +305,14 @@ namespace Photon.Pun.Demo.PunBasics
                 // We own this player: send the others our data
                 stream.SendNext(this.IsFiring);
                 stream.SendNext(this.Health);
+                stream.SendNext(Id);
             }
             else
             {
                 // Network player, receive data
                 this.IsFiring = (bool)stream.ReceiveNext();
                 this.Health = (float)stream.ReceiveNext();
+                Id = (float)stream.ReceiveNext();
             }
         }
 
