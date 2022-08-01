@@ -1,0 +1,248 @@
+{
+  "CatalogVersion": "MainCatalog",
+  "Catalog": [
+    {
+      "ItemId": "One",
+      "ItemClass": null,
+      "CatalogVersion": "MainCatalog",
+      "DisplayName": "My first item",
+      "Description": null,
+      "VirtualCurrencyPrices": null,
+      "RealCurrencyPrices": null,
+      "Tags": null,
+      "CustomData": null,
+      "Consumable": null,
+      "Container": null,
+      "Bundle": null,
+      "CanBecomeCharacter": false,
+      "IsStackable": false,
+      "IsTradable": false,
+      "ItemImageUrl": null,
+      "IsLimitedEdition": false,
+      "InitialLimitedEditionCount": 0,
+      "ActivatedMembership": null
+    },
+    {
+      "ItemId": "coin_id",
+      "ItemClass": "coin",
+      "CatalogVersion": "MainCatalog",
+      "DisplayName": "Gold coin",
+      "Description": "Gold coin.",
+      "VirtualCurrencyPrices": {
+        "SZ": 100,
+        "RM": 100
+      },
+      "RealCurrencyPrices": {},
+      "Tags": [
+        "coin"
+      ],
+      "CustomData": null,
+      "Consumable": {
+        "UsageCount": null,
+        "UsagePeriod": null,
+        "UsagePeriodGroup": null
+      },
+      "Container": null,
+      "Bundle": null,
+      "CanBecomeCharacter": false,
+      "IsStackable": true,
+      "IsTradable": false,
+      "ItemImageUrl": null,
+      "IsLimitedEdition": true,
+      "InitialLimitedEditionCount": 0,
+      "ActivatedMembership": null
+    },
+    {
+      "ItemId": "bandage_id",
+      "ItemClass": "medicine",
+      "CatalogVersion": "MainCatalog",
+      "DisplayName": "Bandage",
+      "Description": "Medicine item, health + 20.",
+      "VirtualCurrencyPrices": {
+        "GD": 100,
+        "RM": 100
+      },
+      "RealCurrencyPrices": {},
+      "Tags": [
+        "\"bandage",
+        "medicine\""
+      ],
+      "CustomData": null,
+      "Consumable": {
+        "UsageCount": 1,
+        "UsagePeriod": null,
+        "UsagePeriodGroup": null
+      },
+      "Container": null,
+      "Bundle": null,
+      "CanBecomeCharacter": false,
+      "IsStackable": true,
+      "IsTradable": false,
+      "ItemImageUrl": null,
+      "IsLimitedEdition": true,
+      "InitialLimitedEditionCount": 0,
+      "ActivatedMembership": null
+    },
+    {
+      "ItemId": "medkit_id",
+      "ItemClass": "medicine",
+      "CatalogVersion": "MainCatalog",
+      "DisplayName": "Medkit",
+      "Description": "Medicine item, health +40",
+      "VirtualCurrencyPrices": {
+        "GD": 200,
+        "RM": 200
+      },
+      "RealCurrencyPrices": {},
+      "Tags": [
+        "\"medkit",
+        "medicine\""
+      ],
+      "CustomData": null,
+      "Consumable": {
+        "UsageCount": 1,
+        "UsagePeriod": null,
+        "UsagePeriodGroup": null
+      },
+      "Container": null,
+      "Bundle": null,
+      "CanBecomeCharacter": false,
+      "IsStackable": true,
+      "IsTradable": false,
+      "ItemImageUrl": null,
+      "IsLimitedEdition": true,
+      "InitialLimitedEditionCount": 0,
+      "ActivatedMembership": null
+    },
+    {
+      "ItemId": "bundle_medicine_id",
+      "ItemClass": "medicine",
+      "CatalogVersion": "MainCatalog",
+      "DisplayName": "Medicine bundle",
+      "Description": null,
+      "VirtualCurrencyPrices": {},
+      "RealCurrencyPrices": {},
+      "Tags": [],
+      "CustomData": null,
+      "Consumable": {
+        "UsageCount": 1,
+        "UsagePeriod": null,
+        "UsagePeriodGroup": null
+      },
+      "Container": null,
+      "Bundle": {
+        "BundledItems": [
+          "bandage_id",
+          "bandage_id",
+          "bandage_id",
+          "medkit_id"
+        ],
+        "BundledResultTables": [],
+        "BundledVirtualCurrencies": null
+      },
+      "CanBecomeCharacter": false,
+      "IsStackable": false,
+      "IsTradable": false,
+      "ItemImageUrl": "medicine",
+      "IsLimitedEdition": false,
+      "InitialLimitedEditionCount": 0,
+      "ActivatedMembership": null
+    },
+    {
+      "ItemId": "key_id",
+      "ItemClass": "key",
+      "CatalogVersion": "MainCatalog",
+      "DisplayName": "Key",
+      "Description": "It opens the chest.",
+      "VirtualCurrencyPrices": {},
+      "RealCurrencyPrices": {},
+      "Tags": [
+        "key"
+      ],
+      "CustomData": null,
+      "Consumable": {
+        "UsageCount": 1,
+        "UsagePeriod": null,
+        "UsagePeriodGroup": null
+      },
+      "Container": null,
+      "Bundle": null,
+      "CanBecomeCharacter": false,
+      "IsStackable": false,
+      "IsTradable": false,
+      "ItemImageUrl": null,
+      "IsLimitedEdition": false,
+      "InitialLimitedEditionCount": 0,
+      "ActivatedMembership": null
+    },
+    {
+      "ItemId": "container_medicine_id",
+      "ItemClass": null,
+      "CatalogVersion": "MainCatalog",
+      "DisplayName": "Medicine container",
+      "Description": null,
+      "VirtualCurrencyPrices": {},
+      "RealCurrencyPrices": {},
+      "Tags": [],
+      "CustomData": null,
+      "Consumable": {
+        "UsageCount": 1,
+        "UsagePeriod": null,
+        "UsagePeriodGroup": null
+      },
+      "Container": {
+        "KeyItemId": "key_id",
+        "ItemContents": [
+          "bundle_medicine_id",
+          "coin_id",
+          "coin_id",
+          "coin_id",
+          "coin_id",
+          "coin_id"
+        ],
+        "ResultTableContents": [],
+        "VirtualCurrencyContents": null
+      },
+      "Bundle": null,
+      "CanBecomeCharacter": false,
+      "IsStackable": false,
+      "IsTradable": false,
+      "ItemImageUrl": null,
+      "IsLimitedEdition": false,
+      "InitialLimitedEditionCount": 0,
+      "ActivatedMembership": null
+    }
+  ],
+  "DropTables": [
+    {
+      "TableId": "table_id",
+      "Nodes": [
+        {
+          "ResultItemType": "ItemId",
+          "ResultItem": "coin_id",
+          "Weight": 5
+        },
+        {
+          "ResultItemType": "ItemId",
+          "ResultItem": "bandage_id",
+          "Weight": 4
+        },
+        {
+          "ResultItemType": "ItemId",
+          "ResultItem": "medkit_id",
+          "Weight": 2
+        },
+        {
+          "ResultItemType": "ItemId",
+          "ResultItem": "bundle_medicine_id",
+          "Weight": 1
+        },
+        {
+          "ResultItemType": "ItemId",
+          "ResultItem": "container_medicine_id",
+          "Weight": 1
+        }
+      ]
+    }
+  ]
+}
